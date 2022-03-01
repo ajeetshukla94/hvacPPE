@@ -1,0 +1,220 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PIN POINT ENGINEERS</title>
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="static/css/styles.css">
+	<script src="static/js/jquery-3.4.1.min.js"></script>
+	<script defer src="static/js/script1.js"></script>
+	<script type=module defer src="static/js/mainLayout.js"></script>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+
+<body>
+
+<script>
+
+var val_1;
+var val_2;
+
+var helpers =
+{	  buildDropdown: function(result, dropdown, emptyMessage)
+	  {
+		   
+		dropdown.html('');
+		dropdown.append('<option value="">' + emptyMessage + '</option>');
+		if(result != '')
+		{
+			$.each(result, function(k, v) 
+			{
+				dropdown.append('<option value="' + v.id + '">' + v.name + '</option>');
+			});
+		}
+	}
+}
+$(function() 
+{
+	$("#SR_NO").change(function()
+	{
+        
+	SR_NO = $('option:selected',this).text();
+	$.getJSON('/update_instument_details', 
+	{
+		params_data : JSON.stringify(company_name)
+	}, function(data) 
+	{			
+			$('#INSTRUMENT_NAME').val(data.INSTRUMENT_NAME);
+      		$('#MAKE_MODEL').val(data.MAKE);
+        	$('#VALIDITY').val(data.VALIDITY);							
+	});
+    });
+	
+	
+	$("#gl_value").change(function()
+	{
+        
+	gl_value = $('option:selected',this).text();
+	$.getJSON('/update_grade', 
+	{
+		params_data : JSON.stringify(gl_value)
+	}, function(data) 
+	{			
+			helpers.buildDropdown
+			(
+								data.dict_list,
+								$('#grade'),
+								'Select an option'
+			);						
+	});
+    });
+	
+	
+	
+	
+	
+	
+});
+
+
+
+
+
+	
+	
+</script>
+
+<my-header></my-header>
+	  
+
+<!-- FRAME SECTION START -->
+	<div id="frame_container">
+		<h5 id = "container_header">Observation Table</h5>
+		<div id="data_frame">
+			<div class="frame">
+				<div class="sections">
+					
+					<label class="form-label col-form-label">Company Name</label></td>
+					<br>
+					<select class="textfield" name="company_name" id="company_name" style="width:100%">
+					<option value="" selected>Select an option</option>
+					{% for company in company_list %}
+						<option value="{{company}}">{{company}}</option>
+					{% endfor %}					
+					</select>
+					<br>
+					<label class="form-label col-form-label">Company Address</label></td>
+					<input type="text" name="company_address" id="company_address" class="textfield" disabled></td>
+
+					<label class="form-label col-form-label">Report Number</label></td>
+					<input type="text" name="report_id" id="report_id"  class="textfield" disabled></td>
+
+					<label class="form-label col-form-label">Name of Test</label></td>
+					<input type="text" name="Nature_of_test" value="Particle Count Test" id="Nature_of_test" class="textfield" disabled></td>
+
+
+					<label class="form-label col-form-label">Test Taken On</label></td>
+					<input type="text" name="Test_taken" id="Test_taken" class="textfield" ></td>
+
+					<label class="form-label col-form-label">Department</label></td>
+					<input type="text" name="location" id="location" class="textfield" ></td>
+					
+					
+					
+					
+					
+					
+					<label class="form-label col-form-label">Select Guidelines</label></td>
+					<br>
+					<select class="textfield" name="gl_value" id="gl_value" style="width:100%">
+					<option value="" selected>Select an option</option>
+					{% for gl in guidlance_list %}
+						<option value="{{gl}}">{{gl}}</option>
+					{% endfor %}					
+					</select>
+					<br>
+					
+					<label class="form-label col-form-label">Test Taken Condition</label></td>
+					<br>
+					<select class="textfield" name="condition" id="condition" style="width:100%">
+					<option value="" selected>Select an option</option>
+					{% for condition in condition_list %}
+						<option value="{{condition}}">{{condition}}</option>
+					{% endfor %}					
+					</select>
+					<br>
+					
+					
+					<label class="form-label col-form-label">Select Grade</label></td>
+					<br>
+					<select class="textfield" name="grade" id="grade" style="width:100%"></select>
+					<br>
+					
+					<label class="form-label col-form-label">Select Serial ID</label></td>
+					<br>
+					<select class="textfield" name="SR_NO" id="SR_NO" style="width:100%">
+					<option value="" selected>Select an option</option>
+					{% for equipment in equipment_list %}
+						<option value="{{equipment}}">{{equipment}}</option>
+					{% endfor %}					
+					</select>
+					<br>
+					
+					
+					<label class="form-label col-form-label">INSTRUMENT_NAME</label></td>
+					<input type="text" name="INSTRUMENT_NAME" id="INSTRUMENT_NAME" class="textfield" disabled></td>
+					
+					<label class="form-label col-form-label">MAKE_MODEL</label></td>
+					<input type="text" name="MAKE_MODEL" id="MAKE_MODEL" class="textfield" disabled></td>
+					
+					<label class="form-label col-form-label">VALIDITY</label></td>
+					<input type="text" name="VALIDITY" id="VALIDITY" class="textfield" disabled></td>					
+	
+					<label class="form-label col-form-label">AHU Number</label></td>
+					<input type="text" name="ahu_number" id="ahu_number" class="textfield"></td>
+
+					<label class="form-label col-form-label">ROOM NAME</label></td>
+					<input type="text" name="room_name" id="room_name" class="textfield"></td>
+											
+				</div>
+
+				
+				
+				<div class="sections">
+					<table id="particleCountTable" class="code_tbl table-striped table-bordered">
+						<tr>
+							<th>Location</th>
+							<th>≥ 0.5 μm</th>
+							<th>≥ 5.0 μm</th>
+							<th>Remark</th>
+						</tr>
+						<tr>
+							<td><input type="text" name="Location" class="textfield"></td>
+							<td><input type="number" name="zeor_point_five" id="zeor_point_five"  class="textfield"></td>							
+							<td><input type="number" name="five_point_zero" id="five_point_zero" class="textfield"></td>	
+							<td><input type="text" name="remark" id="remark" disabled class="textfield"></td>							
+							<td class="del_row"><img src = "static/images/delete.png" class="del_row_img" onclick="delete_row(this)"></td>
+						</tr>
+					</table>
+					<div class="add_row_button">
+					<button id="add_row1" type="button" class="btn btn-sm btn-primary col-sm-2 btn_row" onclick="add_row(this)">Add Row</button>
+					</div>
+					<hr size="10">
+				</div>
+
+
+			</div>
+		</div>
+		<hr size="10">
+		<div id="action_row">
+			<button id="submit_button" type="submit" class="btn btn-sm btn-success col-sm-2" onclick="submit_particle_report()">Submit</button>
+		</div>
+	</div>
+	
+	
+<my-footer></my-footer>
+
+</body>
+
+</html>

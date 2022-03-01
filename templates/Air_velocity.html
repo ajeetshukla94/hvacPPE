@@ -1,0 +1,161 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PIN POINT ENGINEERS</title>
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="static/css/styles.css">
+	<script src="static/js/jquery-3.4.1.min.js"></script>
+	<script defer src="static/js/script1.js"></script>
+	<script type=module defer src="static/js/mainLayout.js"></script>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+
+<body>
+
+<script>
+$(function() 
+{
+	$("#SR_NO").change(function()
+	{
+        
+	SR_NO = $('option:selected',this).text();
+	$.getJSON('/update_instument_details', 
+	{
+		params_data : JSON.stringify(company_name)
+	}, function(data) 
+	{			
+			$('#INSTRUMENT_NAME').val(data.INSTRUMENT_NAME);
+      		$('#MAKE_MODEL').val(data.MAKE);
+        	$('#VALIDITY').val(data.VALIDITY);							
+	});
+    });
+});	
+</script>
+
+
+
+<my-header></my-header>
+
+
+<!-- FRAME SECTION START -->
+	<div id="frame_container">
+		<h5 id = "container_header">Observation Table</h5>
+		<div id="data_frame">
+			<div class="frame">
+				<div class="sections">
+					
+					<label class="form-label col-form-label">Company Name</label></td>
+					<br>
+					
+					<select class="textfield" name="company_name" id="company_name" style="width:100%">
+					<option value="" selected>Select an option</option>
+					{% for company in company_list %}
+						<option value="{{company}}">{{company}}</option>
+					{% endfor %}					
+					</select>
+					
+					<br>
+					<label class="form-label col-form-label">Company Address</label></td>
+					<input type="text" name="company_address" id="company_address" class="textfield" disabled></td>
+
+					<label class="form-label col-form-label">Report Number</label></td>
+					<input type="text" name="report_id" id="report_id"  class="textfield" disabled></td>
+
+					<label class="form-label col-form-label">Name of Test</label></td>
+					<input type="text" name="Nature_of_test" value="Air Velocity" id="Nature_of_test" class="textfield" disabled></td>
+
+
+					<label class="form-label col-form-label">Test Taken On</label></td>
+					<input type="text" name="Test_taken" id="Test_taken" class="textfield" ></td>
+
+					<label class="form-label col-form-label">Department</label></td>
+					<input type="text" name="location" id="location" class="textfield" ></td>
+					
+					
+					<label class="form-label col-form-label">Select Grade</label></td>
+					<select class="textfield" name="grade" id="grade" style="width:100%">
+					<option value="" selected>Select an option</option>
+					{% for grade in grade_list %}
+						<option value="{{grade}}">{{grade}}</option>
+					{% endfor %}					
+					</select>
+					
+					<label class="form-label col-form-label">ACPH Thresold</label></td>
+					<input type="number" name="acph_thresold" id="acph_thresold" class="textfield"></td>
+					
+					<br>
+					
+					
+					<label class="form-label col-form-label">Select Serial ID</label></td>
+					<br>
+					<select class="textfield" name="SR_NO" id="SR_NO" style="width:100%">
+					<option value="" selected>Select an option</option>
+					{% for equipment in equipment_list %}
+						<option value="{{equipment}}">{{equipment}}</option>
+					{% endfor %}					
+					</select>
+					<br>
+					
+					
+					<label class="form-label col-form-label">INSTRUMENT_NAME</label></td>
+					<input type="text" name="INSTRUMENT_NAME" id="INSTRUMENT_NAME" class="textfield" disabled></td>
+					
+					<label class="form-label col-form-label">MAKE_MODEL</label></td>
+					<input type="text" name="MAKE_MODEL" id="MAKE_MODEL" class="textfield" disabled></td>
+					
+					<label class="form-label col-form-label">VALIDITY</label></td>
+					<input type="text" name="VALIDITY" id="VALIDITY" class="textfield" disabled></td>					
+	
+					<label class="form-label col-form-label">AHU Number</label></td>
+					<input type="text" name="ahu_number" id="ahu_number" class="textfield"></td>
+
+					<label class="form-label col-form-label">ROOM NAME</label></td>
+					<input type="text" name="room_name" id="room_name" class="textfield"></td>
+					
+					<label class="form-label col-form-label">ROOM VOLUME</label></td>
+					<input type="number" name="room_volume" id="room_volume" class="textfield"></td>						
+				</div>
+
+				
+				
+				<div class="sections">
+					<table class="code_tbl table-striped table-bordered">
+						<tr>
+							<th>Filter ID No</th>
+							<th>V1</th>
+							<th>V2</th>
+							<th>V3</th>
+							<th>V4</th>
+							<th>V5</th>
+							<th>Inlet size</th>
+						</tr>
+						<tr>
+							<td><input type="text" name="LABEL_NUMBER" class="textfield"></td>
+							<td><input type="number" step="10" name="V1" class="textfield"></td>
+							<td><input type="number" step="10" name="V2" class="textfield"></td>
+							<td><input type="number" step="10" name="V3" class="textfield"></td>
+							<td><input type="number" step="10" name="V4" class="textfield"></td>
+							<td><input type="number" step="10" name="V5" class="textfield"></td>
+							<td><input type="number" name="Inlet_size" class="textfield"></td>
+							<td class="del_row"><img src = "static/images/delete.png" class="del_row_img" onclick="delete_row(this)"></td>
+						</tr>
+					</table>
+					<div class="add_row_button">
+					<button id="add_row1" type="button" class="btn btn-sm btn-primary col-sm-2 btn_row" onclick="add_row(this)">Add Row</button>
+					</div>
+					<hr size="10">
+				</div>
+			</div>
+		</div>
+		<hr size="10">
+		<div id="action_row">
+			<button id="submit_button" type="submit" class="btn btn-sm btn-success col-sm-2" onclick="submit()">Submit</button>
+		</div>
+	</div>
+
+<my-footer></my-footer>
+</body>
+
+</html>

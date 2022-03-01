@@ -1,0 +1,119 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PIN POINT ENGINEERS</title>
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="static/css/styles.css">
+	<script src="static/js/jquery-3.4.1.min.js"></script>
+	<script defer src="static/js/script1.js"></script>
+	<script type=module defer src="static/js/mainLayout.js"></script>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+
+<body>
+
+<script>
+
+var helpers =
+{	  buildDropdown: function(result, dropdown, emptyMessage)
+	  {
+		   
+		dropdown.html('');
+		dropdown.append('<option value="">' + emptyMessage + '</option>');
+		if(result != '')
+		{
+			$.each(result, function(k, v) 
+			{
+				dropdown.append('<option value="' + v.id + '">' + v.name + '</option>');
+			});
+		}
+	}
+}
+
+
+
+$(function() 
+{
+	$("#report_type").change(function()
+	{
+        
+	report_type = $('option:selected',this).text();
+	$.getJSON('/get_available_directory', 
+	{
+		params_data : JSON.stringify(report_type)
+	}, function(data) 
+	{		
+			helpers.buildDropdown
+			(
+								data.dict_list,
+								$('#company_name'),
+								'Select an option'
+			);	
+			var date = new Date();
+			$('#start_date').val(date);
+      		$('#end_date').val(date);
+        							
+	});
+	});
+});
+
+	
+	
+</script>
+
+<my-header></my-header>
+
+<!-- FRAME SECTION START -->
+	<div id="frame_container">
+		<h5 id = "container_header">Observation Table</h5>
+		<div id="data_frame">
+			<div class="frame">
+				<div class="sections">
+				
+				
+					<label class="form-label col-form-label">Select Report Type</label></td>
+					<br>
+					<select class="textfield" name="report_type" id="report_type" style="width:100%">	
+							<option value="AIR_VELOCITY_REPORT">AIR VELOCITY REPORT</option>
+							<option value="PAO_REPORT">PAO REPORT</option>
+							<option value="PARTICLE_REPORT">PARTICLE REPORT</option>
+							
+							
+					</select>
+					<br>
+					<label class="form-label col-form-label">Company Name</label></td>
+					<br>
+					<select class="textfield" name="company_name" id="company_name" style="width:100%";></select><td>
+					<br>
+					<label class="form-label col-form-label">Start Date</label></td>
+					<input type="date" name="start_date" id="start_date" class="textfield"
+						   placeholder="dd-mm-yyyy" value=""
+                           min="1997-01-01" max="2030-12-31"></td>
+
+					<label class="form-label col-form-label">End Date</label></td>
+					<input type="date" name="end_date" id="end_date"  class="textfield"
+						   placeholder="dd-mm-yyyy" value=""
+                           min="1997-01-01" max="2030-12-31"></td>				
+										
+				</div>
+
+				
+				
+				
+
+
+			</div>
+		</div>
+		<hr size="10">
+		<div id="action_row">
+			<button id="submit_button" type="submit" class="btn btn-sm btn-success col-sm-2" onclick="submit_consolidated()">Submit</button>
+		</div>
+	</div>
+	
+<my-footer></my-footer>
+
+</body>
+
+</html>
