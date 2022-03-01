@@ -279,16 +279,17 @@ class Report_Genration:
         compan_name = compan_name.replace("/", "")
         compan_name = compan_name.replace(" ", "")
 
-        working_directory = "static\\Report\\PAO_REPORT\\{}"
-        final_working_directory = "static\\Report\\PAO_REPORT\\{}\\{}.xlsx"
+        working_directory = MYDIR + "/" "static/Report/PAO_REPORT/{}"
+        final_working_directory = "static/Report/PAO_REPORT/{}/{}.xlsx"
         file_name = "{}_PAO_REPORT_{}".format(room_name, str(datetime.datetime.today().strftime('%d_%m_%Y')))
         if not os.path.exists(working_directory.format(compan_name)):
             os.mkdir(working_directory.format(compan_name));
 
-        final_working_directory = final_working_directory.format(compan_name, file_name)
+        store_location = final_working_directory.format(compan_name, file_name)
+        final_working_directory = MYDIR + "/"+final_working_directory.format(compan_name, file_name)
         print(final_working_directory)
 
-        wb = load_workbook('static\inputData\\Template\\PAO_template.xlsx')
+        wb = load_workbook(os.path.join("static/inputData/Template/",'PAO_template.xlsx'))
         ws = wb.active
 
         # Data can be assigned directly to cells
@@ -392,7 +393,7 @@ class Report_Genration:
 
         wb.save(final_working_directory)
 
-        return file_name, final_working_directory
+        return file_name, store_location
 
     @staticmethod
     def generate_report_particle_count(data, basic_details):
