@@ -26,12 +26,12 @@ from fnmatch import fnmatch
 import time
 
 MYDIR = os.path.dirname(__file__)
-app.config['UPLOAD_FOLDER'] = "static/inputData/"
+#app.config['UPLOAD_FOLDER'] = "static/inputData/"
 
 
-customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
-equipment_master  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"equipment_master.xlsx"))
-EUGMP_guidlines   = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"EUGMP_guidlines.xlsx"))
+customer_details  = pd.read_excel(os.path.join("static/inputData/","company_details.xlsx"))
+equipment_master  = pd.read_excel(os.path.join("static/inputData/","equipment_master.xlsx"))
+EUGMP_guidlines   = pd.read_excel(os.path.join("static/inputData/","EUGMP_guidlines.xlsx"))
 
 equipment_master['SR_NO_ID'] = equipment_master['SR_NO_ID'].astype(str)
 equipment_master['DUE_DATE'] = equipment_master['DUE_DATE'].astype(str)
