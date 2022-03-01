@@ -432,18 +432,18 @@ class Report_Genration:
         compan_name = compan_name.replace("/", "")
         compan_name = compan_name.replace(" ", "")
 
-        trn = EUGMP_guidlines[(EUGMP_guidlines['Condition'] == condition) & (EUGMP_guidlines['Grade'] == grade)]
+        #trn = EUGMP_guidlines[(EUGMP_guidlines['Condition'] == condition) & (EUGMP_guidlines['Grade'] == grade)]
 
-        working_directory = "static\\Report\\PARTICLE_REPORT\\{}"
-        final_working_directory = "static\\Report\\PARTICLE_REPORT\\{}\\{}.xlsx"
+        working_directory = MYDIR + "/"  "static/Report/PARTICLE_REPORT/{}"
+        final_working_directory = "static/Report/PARTICLE_REPORT/{}/{}.xlsx"
         file_name = "{}_PARTICLE_REPORT_{}".format(room_name, str(datetime.datetime.today().strftime('%d_%m_%Y')))
         if not os.path.exists(working_directory.format(compan_name)):
             os.mkdir(working_directory.format(compan_name));
-
-        final_working_directory = final_working_directory.format(compan_name, file_name)
+        store_location = final_working_directory.format(compan_name, file_name)
+        final_working_directory = MYDIR + final_working_directory.format(compan_name, file_name)
         print(final_working_directory)
 
-        wb = load_workbook('static\inputData\\Template\\particle_count_template.xlsx')
+        wb = load_workbook(os.path.join("static/inputData/Template/",'particle_count_template.xlsx')
         ws = wb.active
 
         # Data can be assigned directly to cells
@@ -563,12 +563,12 @@ class Report_Genration:
         currentCell.alignment = Alignment(horizontal='center', vertical='center')
 
         ws.merge_cells(start_row=row, start_column=8, end_row=row, end_column=11)
-        ws["H" + str(row)] = trn['point_five_percent'].values[0]
+        ws["H" + str(row)] = 3200000000#trn['point_five_percent'].values[0]
         currentCell = ws["H" + str(row)]
         currentCell.alignment = Alignment(horizontal='center', vertical='center')
 
         ws.merge_cells(start_row=row, start_column=12, end_row=row, end_column=16)
-        ws["L" + str(row)] = trn['five_percent'].values[0]
+        ws["L" + str(row)] = 3200000000#trn['five_percent'].values[0]
         currentCell = ws["L" + str(row)]
         currentCell.alignment = Alignment(horizontal='center', vertical='center')
 
