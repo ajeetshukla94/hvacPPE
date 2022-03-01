@@ -101,8 +101,8 @@ class Report_Genration:
         compan_name = compan_name.replace("/", "")
         compan_name = compan_name.replace(" ", "")
 
-        working_directory = "static\\Report\\AIR_VELOCITY_REPORT\\{}"
-        final_working_directory = "static\\Report\\AIR_VELOCITY_REPORT\\{}\\{}.xlsx"
+        working_directory = "static/Report/AIR_VELOCITY_REPORT/{}"
+        final_working_directory = "static/Report/AIR_VELOCITY_REPORT\{}\{}.xlsx"
         file_name = "{}_AIR_VELOCOTY_REPORT_{}".format(room_name, str(datetime.datetime.today().strftime('%d_%m_%Y')))
         if not os.path.exists(working_directory.format(compan_name)):
             os.mkdir(working_directory.format(compan_name));
@@ -110,7 +110,8 @@ class Report_Genration:
         final_working_directory = final_working_directory.format(compan_name, file_name)
         print(final_working_directory)
 
-        wb = load_workbook('static\inputData\\Template\\Air_velocity_template.xlsx')
+ 
+        wb = load_workbook(os.path.join("static/inputData/Template/",'Air_velocity_template.xlsx'))
         ws = wb.active
 
         # Data can be assigned directly to cells
