@@ -107,6 +107,7 @@ class Report_Genration:
         if not os.path.exists(working_directory.format(compan_name)):
             os.mkdir(working_directory.format(compan_name));
 
+        store_location = final_working_directory.format(compan_name, file_name)
         final_working_directory = MYDIR + "/" +final_working_directory.format(compan_name, file_name)
         print(final_working_directory)
 
@@ -240,7 +241,7 @@ class Report_Genration:
 
         wb.save(final_working_directory)
 
-        return file_name, final_working_directory
+        return file_name, store_location
 
     @staticmethod
     def generate_report_pao(data, basic_details):
