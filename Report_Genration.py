@@ -101,13 +101,13 @@ class Report_Genration:
         compan_name = compan_name.replace("/", "")
         compan_name = compan_name.replace(" ", "")
 
-        working_directory = "static/Report/AIR_VELOCITY_REPORT/{}"
-        final_working_directory = "static/Report/AIR_VELOCITY_REPORT\{}\{}.xlsx"
+        working_directory = MYDIR + "/" +"static/Report/AIR_VELOCITY_REPORT/{}"
+        final_working_directory = "static/Report/AIR_VELOCITY_REPORT/{}/{}.xlsx"
         file_name = "{}_AIR_VELOCOTY_REPORT_{}".format(room_name, str(datetime.datetime.today().strftime('%d_%m_%Y')))
         if not os.path.exists(working_directory.format(compan_name)):
             os.mkdir(working_directory.format(compan_name));
 
-        final_working_directory = final_working_directory.format(compan_name, file_name)
+        final_working_directory = MYDIR + "/" +final_working_directory.format(compan_name, file_name)
         print(final_working_directory)
 
  
