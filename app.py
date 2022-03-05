@@ -177,7 +177,6 @@ def get_available_directory():
  
 @app.route("/update_company_details", methods=['POST', 'GET'])
 def update_company_details():
-    print("****************************123**************")
     customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
     data          = request.args.get('params_data')
     company_name_val     = json.loads(data)
@@ -409,9 +408,13 @@ def submit_particle_report():
     
 @app.route("/submit_updateCompanyDetails")    
 def submit_updateCompanyDetails():   
+    print("****************************123**************")
     data            = request.args.get('params_data')
-    data            = json.loads(data)  
+    print("****************************356**************")
+    data            = json.loads(data)
+    print("****************************789**************")    
     observation     = data['observation']
+    print("****************************246**************")
     #temp_df         = pd.DataFrame.from_dict(observation,orient ='index')
     #temp_df         = temp_df[['COMPANY_NAME','ADDRESS','REPORT_NUMBER']]
     #final_working_directory =MYDIR + "/" + app.config['UPLOAD_FOLDER']+"company_details.xlsx"
