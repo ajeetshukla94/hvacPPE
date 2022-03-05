@@ -658,13 +658,12 @@ function updateCompanyDetails()
 	
 	$.getJSON('/submit_updateCompanyDetails', 
 	{
+		alert("123");	
 		params_data : JSON.stringify(full_data)
 	}, function(result) 
 	{
-		alert("done");
-		
-
-		
+		alert(result);
+		alert("done");		
 	});
 	
 }
