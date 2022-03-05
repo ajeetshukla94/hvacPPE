@@ -414,9 +414,9 @@ def submit_updateCompanyDetails():
     temp_df         = pd.DataFrame.from_dict(observation,orient ='index')
     temp_df         = temp_df[['COMPANY_NAME','ADDRESS','REPORT_NUMBER']]
     print(temp_df)
- 
-    fl_path = MYDIR + "/" + app.config['UPLOAD_FOLDER']+"company_details.xlsx"
-    temp_df.to_excel(fl_path,index=False)
+    final_working_directory =MYDIR + "/" + app.config['UPLOAD_FOLDER_INPUTDATA']+"company_details.xlsx"
+
+    temp_df.to_excel(final_working_directory,index=False)
     d = {"error":"none",}
     
     return json.dumps(d)
