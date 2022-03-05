@@ -177,6 +177,7 @@ def get_available_directory():
  
 @app.route("/update_company_details", methods=['POST', 'GET'])
 def update_company_details():
+    print("****************************123**************")
     customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
     data          = request.args.get('params_data')
     company_name_val     = json.loads(data)
