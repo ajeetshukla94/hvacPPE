@@ -1,0 +1,64 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PIN POINT ENGINEERS</title>
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="static/css/styles.css">
+	<script src="static/js/jquery-3.4.1.min.js"></script>
+	
+	<script defer src="static/js/script1.js"></script>
+	<script type=module defer src="static/js/mainLayout.js"></script>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+
+<body>
+
+<script>
+
+</script>
+
+
+
+<my-header></my-header>
+
+
+<!-- FRAME SECTION START -->
+	<div id="frame_container">
+		<h5 id = "container_header">Customer Details Table</h5>
+		<div id="data_frame">
+			<div class="frame">
+				<div class="sections">
+					<table class="code_tbl table-striped table-bordered">
+						<tr>
+							<th>COMPANY  NAME</th>	
+							<th>ADDRESS Name</th>
+							<th>REPORT NUMBER </th>						
+						</tr>
+						{% for customer in customer_list %}
+						<tr>
+							<td><input type="text" name="COMPANY_NAME" class="textfield" value="{{customer.COMPANY_NAME}}" ></td>	
+							<td><input type="text" name="ADDRESS" class="textfield" value="{{customer.ADDRESS}}" ></td>
+							<td><input type="text" name="REPORT_NUMBER" class="textfield" value="{{customer.REPORT_NUMBER}}" ></td>
+							<td class="del_row"><img src = "static/images/delete.png" class="del_row_img" onclick="delete_row(this)"></td>
+						</tr>
+						{% endfor %}
+					</table>
+					<div class="add_row_button">
+					<button id="add_row1" type="button" class="btn btn-sm btn-primary col-sm-2 btn_row" onclick="add_row(this)">Add Row</button>
+					</div>
+					<hr size="10">
+				</div>
+			</div>
+		</div>
+		<hr size="10">
+		<div id="action_row">
+			<button id="submit_button" type="submit" class="btn btn-sm btn-success col-sm-2" onclick="updateCompanyDetails()">Submit</button>
+		</div>
+	</div>
+
+<my-footer></my-footer>
+</body>
+
+</html>

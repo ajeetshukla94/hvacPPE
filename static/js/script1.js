@@ -64,7 +64,7 @@ function submit(){
 	}
 	if ($('#location').val()=="")
 	{
-		alert("Please enter location ");
+		alert("Please enter Department ");
 		return ;
 	}
 	if ($('#Test_taken').val()=="")
@@ -243,7 +243,7 @@ function submit_pao(){
 	}
 	if ($('#location').val()=="")
 	{
-		alert("Please enter location ");
+		alert("Please enter Department ");
 		return ;
 	}
 	if ($('#Test_taken').val()=="")
@@ -383,7 +383,7 @@ function submit_particle_report(){
 	}
 	if ($('#location').val()=="")
 	{
-		alert("Please enter location ");
+		alert("Please enter Department ");
 		return ;
 	}
 	if ($('#grade').val()=="")
@@ -612,6 +612,63 @@ $('#particleCountTable').on('change', 'input', function () {
 	
 	
 });
+
+
+function updateCompanyDetails()
+{
+	code_tbl = document.getElementsByClassName("code_tbl")[0]
+	code_rows = code_tbl.rows
+	
+	for(var j = 1; j<code_rows.length; j++)
+	{
+		tds = code_rows[j].children
+		
+		if (tds[0].firstElementChild.value=="")
+		{	
+				alert("Filter COMPANY NAME cannot be blank in row : "+j);
+				return;
+		}
+		
+		if (tds[1].firstElementChild.value=="")
+		{	
+				alert("Filter ADDRESS cannot be blank in row : "+j);
+				return;
+		}
+		
+		
+		if (tds[2].firstElementChild.value=="")
+		{	
+				alert("Filter REPORT NUMBER  cannot be blank in row : "+j);
+				return;
+		}		
+	}
+	var final_table_data = {};
+    var full_data = {};	
+	for(var j = 1; j<code_rows.length; j++)
+	{
+		tds = code_rows[j].children	
+		var table_data = {};
+		table_data['COMPANY_NAME'] =tds[0].firstElementChild.value 	
+		table_data['ADDRESS'] =tds[1].firstElementChild.value 	
+		table_data['REPORT_NUMBER'] =tds[2].firstElementChild.value 		
+		final_table_data[j] = table_data
+	}
+	
+	full_data['observation']=final_table_data
+	
+	$.getJSON('/submit_updateCompanyDetails', 
+	{
+		params_data : JSON.stringify(full_data)
+	}, function(result) 
+	{
+		alert("done");
+		
+
+		
+	});
+	
+}
+
 
 
 

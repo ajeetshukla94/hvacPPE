@@ -34,7 +34,7 @@ app.secret_key = 'file_upload_key'
 
 MYDIR = os.path.dirname(__file__)
 app.config['UPLOAD_FOLDER'] = "static/inputData/"
-customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
+
 equipment_master  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"equipment_master.xlsx"))
 ISO_guidlines_master  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"ISO_guidlines.xlsx"))
 EUGMP_guidlines_master  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"EUGMP_guidlines.xlsx"))
@@ -44,7 +44,7 @@ equipment_master['DONE_DATE'] = equipment_master['DONE_DATE'].astype(str)
 
 
 
-company_name_list             = customer_details.COMPANY_NAME.unique().tolist()
+
 guidlance_list                = ISO_guidlines_master.Guidelines.unique().tolist()+EUGMP_guidlines_master.Guidelines.unique().tolist()
 serial_id_list_pao            = equipment_master[equipment_master['Type']=='PAO_TEST'].SR_NO_ID.unique().tolist()
 serial_id_list_particle_count = equipment_master[equipment_master['Type']=='PARTICLE_COUNT'].SR_NO_ID.unique().tolist()
@@ -91,6 +91,8 @@ def default():
     
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
+    company_name_list             = customer_details.COMPANY_NAME.unique().tolist()
     if request.method == 'POST':
       form_data = request.form
       l_id = form_data['login']
@@ -121,20 +123,34 @@ def logout():
 
 @app.route("/Air_velocity")
 def Air_velocity():
+    customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
+    company_name_list             = customer_details.COMPANY_NAME.unique().tolist()
     return make_response(render_template('Air_velocity.html',grade_list=grade_list,
     company_list=company_name_list,equipment_list =serial_id_list_air_velocity),200) 
     
 @app.route("/paotest")
 def paotest():
+    customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
+    company_name_list             = customer_details.COMPANY_NAME.unique().tolist()
     return make_response(render_template('PAO.html',company_list=company_name_list,
                             equipment_list =serial_id_list_pao),200)
+                            
+@app.route("/UpdateCompanyDetails")
+def UpdateCompanyDetails():   
+    customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
+    customer_list   = customer_details.to_dict('records')
+    return make_response(render_template('UpdateCompanyDetails.html',customer_list  = customer_list),200) 
     
 @app.route("/consolidation")
 def consolidation():
+    customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
+    company_name_list             = customer_details.COMPANY_NAME.unique().tolist()
     return make_response(render_template('consolidation.html'),200)
     
 @app.route("/particle_count")
 def particle_count():
+    customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
+    company_name_list             = customer_details.COMPANY_NAME.unique().tolist()
     return make_response(render_template('particle_count.html',company_list=company_name_list,
 					 guidlance_list=guidlance_list  ,
 					  equipment_list =serial_id_list_particle_count,
@@ -161,7 +177,7 @@ def get_available_directory():
  
 @app.route("/update_company_details", methods=['POST', 'GET'])
 def update_company_details():
-   
+    customer_details  = pd.read_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"))
     data          = request.args.get('params_data')
     company_name_val     = json.loads(data)
     company_address = ""
@@ -388,9 +404,26 @@ def submit_particle_report():
         }
     
     return json.dumps(d)
+    
+    
+@app.route("/submit_updateCompanyDetails")    
+def submit_updateCompanyDetails():   
+    data            = request.args.get('params_data')
+    data            = json.loads(data)  
+    observation     = data['observation']
+    temp_df         = pd.DataFrame.from_dict(observation,orient ='index')
+    temp_df =temp_df[['COMPANY_NAME','ADDRESS','REPORT_NUMBER']]
+ 
+    final_working_directory = MYDIR + "static/inputData/company_details.xlsx"
+    temp_df.to_excel(final_working_directory,index=False)
+    d = {
+        "error":"none",
+        }
+    
+    return json.dumps(d)
    
 
 if __name__ == '__main__':
-    #app.debug = True
+    app.debug = True
     app.run()
 

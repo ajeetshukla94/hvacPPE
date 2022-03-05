@@ -10,9 +10,11 @@ class MyHeader extends HTMLElement{
 		<a href="/paotest">PAO TEST</a> \
 		<a href="/particle_count">PARTICLE COUNT TEST</a> \
 		<a href="/consolidation">CONSOLIDATION</a>   \
+		<a href="/UpdateCompanyDetails">UPDATE COMPANY DETAILS</a>   \
 		<a href="/logout">LOGOUT</a>  \
 		</div>\
 		'
+		
 	}
 }
 customElements.define('my-header',MyHeader)
