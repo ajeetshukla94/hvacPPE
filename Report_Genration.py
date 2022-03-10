@@ -66,7 +66,7 @@ class Report_Genration:
         self = self
 
     @staticmethod
-    def generate_report(data, basic_details):
+    def generate_report(data, basic_details,user):
         sr_no = basic_details['sr_no']
         company_name = basic_details['company_name']
         room_volume = basic_details['room_volume']
@@ -87,9 +87,9 @@ class Report_Genration:
         INSTRUMENT_NAME = temp_df.EQUIPMENT_NAME.values[0]
         MAKE = temp_df.MAKE.values[0]
         MAKE_MODEL = temp_df.MODEL_NUMBER.values[0]
-        done_date = temp_df.DONE_DATE.values[0]
-        due_date = temp_df.DUE_DATE.values[0]
-        VALIDITY = temp_df.DUE_DATE.values[0]
+        done_date = temp_df.DONE_DATE.values[0].split()[0]
+        due_date = temp_df.DUE_DATE.values[0].split()[0]
+        VALIDITY = temp_df.DUE_DATE.values[0].replace("-","/").split()[0]
         Nature_of_test = "AIR VELOCITY"
         location = locatiom
         customer_name = company_name_val
@@ -115,6 +115,7 @@ class Report_Genration:
  
         wb = load_workbook(os.path.join("static/inputData/Template/",'Air_velocity_template.xlsx'))
         ws = wb.active
+        ws.protection.sheet = True
 
         # Data can be assigned directly to cells
         ws['F3'] = str(company_name_val)
@@ -236,8 +237,13 @@ class Report_Genration:
         currentCell = ws["H" + str(row + 8)]
         currentCell.alignment = Alignment(horizontal='center', vertical='top')
         #######################################
+        ws.merge_cells(start_row=(row + 9), start_column=2, end_row=(row + 9), end_column=16)
 
-        set_border(ws, 'B1:P' + str(row + 8))
+        ws["B" + str(row + 9)] = "Test Carried out by {} on {}".format(user,datetime.datetime.today().strftime('%d/%m/%Y %H:%M:%S'))
+
+
+
+        set_border(ws, 'B1:P' + str(row + 9))
         set_border(ws, 'B1:P' + str(1))
 
         wb.save(final_working_directory)
@@ -245,7 +251,7 @@ class Report_Genration:
         return file_name, store_location
 
     @staticmethod
-    def generate_report_pao(data, basic_details):
+    def generate_report_pao(data, basic_details,user):
         sr_no = basic_details['sr_no']
         company_name = basic_details['company_name']
         room_name = basic_details['room_name']
@@ -266,9 +272,9 @@ class Report_Genration:
         INSTRUMENT_NAME = temp_df.EQUIPMENT_NAME.values[0]
         MAKE = temp_df.MAKE.values[0]
         MAKE_MODEL = temp_df.MODEL_NUMBER.values[0]
-        done_date = temp_df.DONE_DATE.values[0]
-        due_date = temp_df.DUE_DATE.values[0]
-        VALIDITY = temp_df.DUE_DATE.values[0]
+        done_date = temp_df.DONE_DATE.values[0].split()[0]
+        due_date = temp_df.DUE_DATE.values[0].split()[0]
+        VALIDITY = temp_df.DUE_DATE.values[0].replace("-","/").split()[0]
         Nature_of_test = "PAO REPORT"
         location = locatiom
         customer_name = company_name_val
@@ -292,6 +298,7 @@ class Report_Genration:
 
         wb = load_workbook(os.path.join("static/inputData/Template/",'PAO_template.xlsx'))
         ws = wb.active
+        ws.protection.sheet = True
 
         # Data can be assigned directly to cells
         ws['F3'] = str(company_name_val)
@@ -388,8 +395,12 @@ class Report_Genration:
         currentCell = ws["H" + str(row + 8)]
         currentCell.alignment = Alignment(horizontal='center', vertical='top')
         #######################################
+        
+        ws.merge_cells(start_row=(row + 9), start_column=2, end_row=(row + 9), end_column=16)
+        ws["B" + str(row + 9)] = "Test Carried out by {} on {}".format(user,datetime.datetime.today().strftime('%d/%m/%Y %H:%M:%S'))
 
-        set_border(ws, 'B1:P' + str(row + 8))
+
+        set_border(ws, 'B1:P' + str(row + 9))
         set_border(ws, 'B1:P' + str(1))
 
         wb.save(final_working_directory)
@@ -397,7 +408,7 @@ class Report_Genration:
         return file_name, store_location
 
     @staticmethod
-    def generate_report_particle_count(data, basic_details):
+    def generate_report_particle_count(data, basic_details,user):
         sr_no = basic_details['sr_no']
         company_name = basic_details['company_name']
         room_name = basic_details['room_name']
@@ -418,9 +429,9 @@ class Report_Genration:
         INSTRUMENT_NAME = temp_df.EQUIPMENT_NAME.values[0]
         MAKE = temp_df.MAKE.values[0]
         MAKE_MODEL = temp_df.MODEL_NUMBER.values[0]
-        done_date = temp_df.DONE_DATE.values[0]
-        due_date = temp_df.DUE_DATE.values[0]
-        VALIDITY = temp_df.DUE_DATE.values[0]
+        done_date = temp_df.DONE_DATE.values[0].split()[0]
+        due_date = temp_df.DUE_DATE.values[0].split()[0]
+        VALIDITY = temp_df.DUE_DATE.values[0].replace("-","/").split()[0]
         Nature_of_test = "PARTICLE COUNT REPORT"
         location = locatiom
         customer_name = company_name_val
@@ -450,6 +461,7 @@ class Report_Genration:
 
         wb = load_workbook(os.path.join("static/inputData/Template/",'particle_count_template.xlsx'))
         ws = wb.active
+        ws.protection.sheet = True
 
         # Data can be assigned directly to cells
         ws['F3'] = str(company_name_val)
@@ -615,6 +627,10 @@ class Report_Genration:
         currentCell = ws["H" + str(row + 8)]
         currentCell.alignment = Alignment(horizontal='center', vertical='top')
         #######################################
+        
+        ws.merge_cells(start_row=(row + 9), start_column=2, end_row=(row + 9), end_column=16)
+
+        ws["B" + str(row + 9)] = "Test Carried out by {} on {}".format(user,datetime.datetime.today().strftime('%d/%m/%Y %H:%M:%S'))
 
         set_border(ws, 'B1:P' + str(row + 8))
         set_border(ws, 'B1:P' + str(1))

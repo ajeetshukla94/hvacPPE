@@ -661,8 +661,7 @@ function updateCompanyDetails()
 		params_data : JSON.stringify(full_data)
 	}, function(result) 
 	{
-		alert(result);
-		alert("done");		
+		alert("COMPANY DETAILS UPDATED");		
 	});
 	
 }

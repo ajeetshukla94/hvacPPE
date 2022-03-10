@@ -25,7 +25,7 @@ from email import encoders
 from fnmatch import fnmatch
 import time
 from Report_Genration import Report_Genration
-
+user="Admin"
 working_directory ="AIR_VELOCITY_REPORT\\{}"
 final_working_directory ="AIR_VELOCITY_REPORT\\{}\\{}.xlsx"
 
@@ -216,9 +216,9 @@ def update_instument_details():
         INSTRUMENT_NAME = str(temp_df.EQUIPMENT_NAME.values[0])
         MAKE           = str(temp_df.MAKE.values[0])
         MODEL_NUMBER   = str(temp_df.MODEL_NUMBER.values[0])
-        done_date      = str(temp_df.DONE_DATE.values[0])
-        due_date       = str(temp_df.DUE_DATE.values[0])
-        VALIDITY        = str(temp_df.DUE_DATE.values[0]).replace("-","/")
+        done_date      = str(temp_df.DONE_DATE.values[0]).split()[0]
+        due_date       = str(temp_df.DUE_DATE.values[0]).split()[0]
+        VALIDITY        = str(temp_df.DUE_DATE.values[0]).replace("-","/").split()[0]
         
        
     d = {
@@ -306,7 +306,7 @@ def submit_data():
     observation   = full_data['observation']    
     company_name  = basic_details['company_name']
     temp_df       = pd.DataFrame.from_dict(observation,orient ='index')
-    file_name,file_path=Report_Genration.generate_report(temp_df ,basic_details)    
+    file_name,file_path=Report_Genration.generate_report(temp_df ,basic_details,user)    
     subject       = "HVAC-Air Velocity Automated Genrated Report - {}".format(company_name)
     text          = "Hi PinPoint Team \n\nPlease find attached automated Generated File {} for {} \n\nRegards \nAjeet Shukla :) :) :)".format(file_name,company_name)
    
@@ -370,7 +370,7 @@ def submit_data_pao():
     observation   = full_data['observation']
     company_name  = basic_details['company_name']
     temp_df = pd.DataFrame.from_dict(observation,orient ='index')
-    file_name,file_path=Report_Genration.generate_report_pao(temp_df,basic_details)
+    file_name,file_path=Report_Genration.generate_report_pao(temp_df,basic_details,user)
     subject   = "HVAC-PAO Automated Genrated Report - {}".format(company_name)
     text      = "Hi PinPoint Team \n\nPlease find attached automated Generated File {} for {} \n\nRegards \nAjeet Shukla :) :) :)".format(file_name,company_name)
 
@@ -392,7 +392,7 @@ def submit_particle_report():
     observation   = full_data['observation']	
     company_name  = basic_details['company_name']
     temp_df       = pd.DataFrame.from_dict(observation,orient ='index')
-    file_name,file_path=Report_Genration.generate_report_particle_count(temp_df,basic_details)
+    file_name,file_path=Report_Genration.generate_report_particle_count(temp_df,basic_details,user)
     subject   = "Particle Count Automated Genrated Report - {}".format(company_name)
     text      = "Hi PinPoint Team \n\nPlease find attached automated Generated File {} for {} \n\nRegards \nAjeet Shukla :) :) :)".format(file_name,company_name)
     if sent_mail:
@@ -406,20 +406,20 @@ def submit_particle_report():
     return json.dumps(d)
     
     
-@app.route("/submit_updateCompanyDetails")    
+@app.route("/submit_updateCompanyDetails" )    
 def submit_updateCompanyDetails():   
-    print("****************************123**************")
     data            = request.args.get('params_data')
     print("****************************356**************")
     data            = json.loads(data)
     print("****************************789**************")    
     observation     = data['observation']
-    print("****************************246**************")
-    #temp_df         = pd.DataFrame.from_dict(observation,orient ='index')
-    #temp_df         = temp_df[['COMPANY_NAME','ADDRESS','REPORT_NUMBER']]
-    #final_working_directory =MYDIR + "/" + app.config['UPLOAD_FOLDER']+"company_details.xlsx"
+    print("****************************observation**************")
+    temp_df         = pd.DataFrame.from_dict(observation,orient ='index')
+    print("****************************observation done**************")
+    temp_df         = temp_df[['COMPANY_NAME','ADDRESS','REPORT_NUMBER']]
+    final_working_directory =MYDIR + "/" + app.config['UPLOAD_FOLDER']+"company_details.xlsx"
 
-    #temp_df.to_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"),index=False)
+    temp_df.to_excel(os.path.join(app.config['UPLOAD_FOLDER'],"company_details.xlsx"),index=False)
     d = {"error":"none",}   
     return json.dumps(d)
    
