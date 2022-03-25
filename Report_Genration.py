@@ -67,6 +67,7 @@ class Report_Genration:
 
     @staticmethod
     def generate_report(data, basic_details,user):
+        customer_details      = pd.read_excel(os.path.join("static/inputData/","company_details.xlsx"))
         sr_no = basic_details['sr_no']
         company_name = basic_details['company_name']
         room_volume = basic_details['room_volume']
@@ -269,6 +270,7 @@ class Report_Genration:
 
     @staticmethod
     def generate_report_pao(data, basic_details,user):
+        customer_details      = pd.read_excel(os.path.join("static/inputData/","company_details.xlsx"))
         sr_no = basic_details['sr_no']
         company_name = basic_details['company_name']
         room_name = basic_details['room_name']
@@ -443,6 +445,7 @@ class Report_Genration:
 
     @staticmethod
     def generate_report_particle_count(data, basic_details,user):
+        customer_details      = pd.read_excel(os.path.join("static/inputData/","company_details.xlsx"))
         sr_no = basic_details['sr_no']
         company_name = basic_details['company_name']
         room_name = basic_details['room_name']
