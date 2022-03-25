@@ -112,6 +112,23 @@ class Report_Genration:
         final_working_directory = MYDIR + "/" +final_working_directory.format(compan_name, file_name)
         print(final_working_directory)
 
+        pattern = "*.xlsx"
+        mypath     = 'static\\Report\\{}\{}'.format('AIR_VELOCITY_REPORT',compan_name)
+        compare_date = datetime.datetime.today().strftime('%d/%m/%Y')
+        print(compare_date)
+        file_list= []
+        for path, subdirs, files in os.walk(mypath):
+            for name in files:
+                if fnmatch(name, pattern):          
+                    file_time = time.strftime('%d/%m/%Y',time.gmtime(os.path.getmtime(os.path.join(path, name) )))
+                    datetime_object = datetime.datetime.strptime(file_time, '%d/%m/%Y').strftime('%d/%m/%Y')
+                    print(datetime_object)
+                    if  datetime_object==compare_date :
+                        file_list.append(os.path.join(path, name))
+        print("total file today")                
+        print(len(file_list))
+        
+        report_number = "PPE0{}AV{}{}".format(report_number,datetime.datetime.today().strftime('%d%m%Y'),len(file_list)+1)
  
         wb = load_workbook(os.path.join("static/inputData/Template/",'Air_velocity_template.xlsx'))
         ws = wb.active
@@ -126,7 +143,7 @@ class Report_Genration:
         ws['F8'] = str(location)
         ws['F9'] = str(done_date).replace("-", "/")
         ws['F10'] = str(due_date).replace("-", "/")
-        ws['F11'] = str("PPE0{}AV01A".format(report_number))
+        ws['F11'] = report_number 
 
         ws['B17'] = str(INSTRUMENT_NAME)
         ws['E17'] = str(MAKE_MODEL)
@@ -295,6 +312,23 @@ class Report_Genration:
         store_location = final_working_directory.format(compan_name, file_name)
         final_working_directory = MYDIR + "/"+final_working_directory.format(compan_name, file_name)
         print(final_working_directory)
+        
+        
+        pattern = "*.xlsx"
+        mypath     = 'static\\Report\\{}\{}'.format('PAO_REPORT',compan_name)
+        compare_date = datetime.datetime.today().strftime('%d/%m/%Y')
+        print(compare_date)
+        file_list= []
+        for path, subdirs, files in os.walk(mypath):
+            for name in files:
+                if fnmatch(name, pattern):          
+                    file_time = time.strftime('%d/%m/%Y',time.gmtime(os.path.getmtime(os.path.join(path, name) )))
+                    datetime_object = datetime.datetime.strptime(file_time, '%d/%m/%Y').strftime('%d/%m/%Y')
+                    print(datetime_object)
+                    if  datetime_object==compare_date :
+                        file_list.append(os.path.join(path, name))
+        
+        report_number = "PPE0{}PA{}{}".format(report_number,datetime.datetime.today().strftime('%d%m%Y'),len(file_list)+1)
 
         wb = load_workbook(os.path.join("static/inputData/Template/",'PAO_template.xlsx'))
         ws = wb.active
@@ -309,7 +343,7 @@ class Report_Genration:
         ws['F8'] = str(location)
         ws['F9'] = str(done_date).replace("-", "/")
         ws['F10'] = str(due_date).replace("-", "/")
-        ws['F11'] = str("PPE0{}AV01A".format(report_number))
+        ws['F11'] = report_number#str("PPE0{}AV01A".format(report_number))
 
         ws['B17'] = str(INSTRUMENT_NAME)
         ws['E17'] = str(MAKE_MODEL)
@@ -458,6 +492,22 @@ class Report_Genration:
         store_location = final_working_directory.format(compan_name, file_name)
         final_working_directory = MYDIR +"/" + final_working_directory.format(compan_name, file_name)
         print(final_working_directory)
+        
+        pattern = "*.xlsx"
+        mypath     = 'static\\Report\\{}\{}'.format('PARTICLE_REPORT',compan_name)
+        compare_date = datetime.datetime.today().strftime('%d/%m/%Y')
+        print(compare_date)
+        file_list= []
+        for path, subdirs, files in os.walk(mypath):
+            for name in files:
+                if fnmatch(name, pattern):          
+                    file_time = time.strftime('%d/%m/%Y',time.gmtime(os.path.getmtime(os.path.join(path, name) )))
+                    datetime_object = datetime.datetime.strptime(file_time, '%d/%m/%Y').strftime('%d/%m/%Y')
+                    print(datetime_object)
+                    if  datetime_object==compare_date :
+                        file_list.append(os.path.join(path, name))
+        
+        report_number = "PPE0{}PC{}{}".format(report_number,datetime.datetime.today().strftime('%d%m%Y'),len(file_list)+1)
 
         wb = load_workbook(os.path.join("static/inputData/Template/",'particle_count_template.xlsx'))
         ws = wb.active
@@ -472,7 +522,7 @@ class Report_Genration:
         ws['F8'] = str(location)
         ws['F9'] = str(done_date).replace("-", "/")
         ws['F10'] = str(due_date).replace("-", "/")
-        ws['F11'] = str("PPE0{}AV01A".format(report_number))
+        ws['F11'] = report_number#str("PPE0{}AV01A".format(report_number))
 
         ws['B17'] = str(INSTRUMENT_NAME)
         ws['E17'] = str(MAKE_MODEL)

@@ -103,7 +103,7 @@ def login():
           flash('Login Successful')
           return make_response(render_template('Air_velocity.html',company_list=company_name_list,
                                 grade_list=grade_list,
-                                equipment_list =serial_id_list_air_velocity,
+                                equipment_list =serial_id_list_air_velocity,user_type='admin',
                                 msg = True, err = False, warn = False),200)
       else:
           print('inside else')
