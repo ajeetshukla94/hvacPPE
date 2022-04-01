@@ -105,6 +105,15 @@ def login():
                                 grade_list=grade_list,
                                 equipment_list =serial_id_list_air_velocity,user_type='admin',
                                 msg = True, err = False, warn = False),200)
+                                
+      elif (l_id.lower()=='mukulg'.lower() and pwd == 'mukul123'):
+          print('inside if')
+          session['username'] = l_id
+          flash('Login Successful')
+          return make_response(render_template('Air_velocity.html',company_list=company_name_list,
+                                grade_list=grade_list,
+                                equipment_list =serial_id_list_air_velocity,user_type='admin',
+                                msg = True, err = False, warn = False),200)
       else:
           print('inside else')
           flash('Invalid Credentials')

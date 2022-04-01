@@ -128,8 +128,9 @@ class Report_Genration:
                         file_list.append(os.path.join(path, name))
         print("total file today")                
         print(len(file_list))
-        
-        report_number = "PPE0{}AV{}{}".format(report_number,datetime.datetime.today().strftime('%d%m%Y'),len(file_list)+1)
+        file_counter =str(len(file_list)+1).zfill(2)
+        report_number =str(report_number).zfill(3)
+        report_number = "PPE{}AV{}\{}".format(report_number,datetime.datetime.today().strftime('%d%m%Y'),file_counter)
  
         wb = load_workbook(os.path.join("static/inputData/Template/",'Air_velocity_template.xlsx'))
         ws = wb.active
@@ -157,10 +158,10 @@ class Report_Genration:
 
         row = 24
         data['AVG_Velocity'] = data.apply(sum_velocty, axis=1)
-        data['CFM'] = data.apply(lambda x: int(x['AVG_Velocity']) * int(x['Inlet_size']), axis=1)
-        Total_cfm = data['CFM'].sum()
-        ACPH_VALUE = float((Total_cfm * 60)) / float(room_volume)
-        ACPH_VALUE = int(ACPH_VALUE)
+        data['CFM'] = data.apply(lambda x: int(x['AVG_Velocity']) * float(x['Inlet_size']), axis=1)
+        Total_cfm   = data['CFM'].sum()
+        ACPH_VALUE  = float((Total_cfm * 60)) / float(room_volume)
+        ACPH_VALUE  = round(ACPH_VALUE,2)
 
         # set_border(ws, "B16:M17")
         for row_data in data.itertuples():
