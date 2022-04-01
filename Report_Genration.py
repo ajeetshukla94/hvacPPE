@@ -24,6 +24,8 @@ from email.utils import formatdate
 from email import encoders
 from fnmatch import fnmatch
 import time
+import pytz
+IST = pytz.timezone('Asia/Kolkata')
 
 MYDIR = os.path.dirname(__file__)
 #app.config['UPLOAD_FOLDER'] = "static/inputData/"
@@ -257,8 +259,8 @@ class Report_Genration:
         currentCell.alignment = Alignment(horizontal='center', vertical='top')
         #######################################
         ws.merge_cells(start_row=(row + 9), start_column=2, end_row=(row + 9), end_column=16)
-
-        ws["B" + str(row + 9)] = "Test Carried out by {} on {}".format(user,datetime.datetime.today().strftime('%d/%m/%Y %H:%M:%S'))
+        user = "Mukul Goel"
+        ws["B" + str(row + 9)] = "Test Carried out by {} on {}".format(user,datetime.datetime.now(IST).strftime('%d/%m/%Y %H:%M:%S'))
 
 
 

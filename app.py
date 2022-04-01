@@ -28,7 +28,7 @@ from Report_Genration import Report_Genration
 user="Admin"
 working_directory ="AIR_VELOCITY_REPORT\\{}"
 final_working_directory ="AIR_VELOCITY_REPORT\\{}\\{}.xlsx"
-#123
+
 app = Flask(__name__)
 app.secret_key = 'file_upload_key'
 
@@ -50,7 +50,7 @@ serial_id_list_pao            = equipment_master[equipment_master['Type']=='PAO_
 serial_id_list_particle_count = equipment_master[equipment_master['Type']=='PARTICLE_COUNT'].SR_NO_ID.unique().tolist()
 serial_id_list_air_velocity   = equipment_master[equipment_master['Type']=='AIR_VELOCITY'].SR_NO_ID.unique().tolist()
 
-sent_mail                     = False
+sent_mail                     = True
 
 condition_list                = ['At Rest','In Operation']
 grade_list                    = ['A','B','C','D']
@@ -61,7 +61,7 @@ port      =  587
 username  =  "aajeetshk@gmail.com"
 password  =  "ilbumnmnsnqletdk"
 send_from = "aajeetshk@gmail.com"
-send_to   = "ashish@pinpointengineers.co.in"
+send_to   = "contact@pinpointengineers.co.in"
 
 def send_mail(subject,text,files,file_name,isTls=True):
         msg = MIMEMultipart()
@@ -114,6 +114,16 @@ def login():
                                 grade_list=grade_list,
                                 equipment_list =serial_id_list_air_velocity,user_type='admin',
                                 msg = True, err = False, warn = False),200)
+                                
+      elif (l_id.lower()=='nirmlam'.lower() and pwd == 'nirmla123'):
+          print('inside if')
+          session['username'] = l_id
+          flash('Login Successful')
+          return make_response(render_template('Air_velocity.html',company_list=company_name_list,
+                                grade_list=grade_list,
+                                equipment_list =serial_id_list_air_velocity,user_type='admin',
+                                msg = True, err = False, warn = False),200)
+                                
       else:
           print('inside else')
           flash('Invalid Credentials')
